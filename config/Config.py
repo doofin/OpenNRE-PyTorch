@@ -13,7 +13,7 @@ import sklearn.metrics
 from tqdm import tqdm
 
 def to_var(x):
-	return Variable(torch.from_numpy(x).cuda())
+	return Variable(torch.from_numpy(x))
 
 class Accuracy(object):
 	def __init__(self):
@@ -153,7 +153,7 @@ class Config(object):
 		self.trainModel = self.model(config = self)
 		if self.pretrain_model != None:
 			self.trainModel.load_state_dict(torch.load(self.pretrain_model))
-		self.trainModel.cuda()
+		self.trainModel
 		if self.optimizer != None:
 			pass
 		elif self.opt_method == "Adagrad" or self.opt_method == "adagrad":
@@ -170,7 +170,7 @@ class Config(object):
 		print("Initializing test model...")
 		self.model = model
 		self.testModel = self.model(config = self)
-		self.testModel.cuda()
+		self.testModel
 		self.testModel.eval()
 		print("Finish initializing")
 
@@ -220,7 +220,7 @@ class Config(object):
 			else:
 				self.acc_not_NA.add(prediction == self.batch_label[i])
 			self.acc_total.add(prediction == self.batch_label[i])
-		return loss.data[0]
+		return loss.data.item()
 
 	def test_one_step(self):
 		self.testModel.embedding.word = to_var(self.batch_word)
@@ -243,6 +243,8 @@ class Config(object):
 			self.acc_not_NA.clear()
 			self.acc_total.clear()
 			np.random.shuffle(self.train_order)
+			self.train_batches=int(self.train_batches)
+			print(self.train_batches)
 			for batch in range(self.train_batches):
 				self.get_train_batch(batch)
 				loss = self.train_one_step()
