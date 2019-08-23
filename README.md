@@ -51,6 +51,13 @@ unzip raw_data.zip
 ```
 ## Dataset
 
+protoc --proto_path=. --python_out=. Document.proto
+
+python2 protobuf2json.py .
+
+Then you will get `train.json`, `test.json` and their reading-friendly version `train-reading-friendly.json` and `test-reading-friendly.json`. Besides, we've provided `nyt_word_vec.json` and `rel2id.json`, which you will need for OpenNRE.
+
+
 ### NYT10 Dataset
 
 NYT10 is a distantly supervised dataset originally released by the paper "Sebastian Riedel, Limin Yao, and Andrew McCallum. Modeling relations and their mentions without labeled text.". Here is the download [link](http://iesl.cs.umass.edu/riedel/ecml/) for the original data.
