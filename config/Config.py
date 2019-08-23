@@ -275,6 +275,7 @@ class Config(object):
 		print("Finish storing")
 	def test_one_epoch(self):
 		test_score = []
+		self.test_batches=int(self.test_batches)
 		for batch in tqdm(range(self.test_batches)):
 			self.get_test_batch(batch)
 			batch_score = self.test_one_step()
